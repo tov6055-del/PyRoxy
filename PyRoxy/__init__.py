@@ -6,6 +6,8 @@ from multiprocessing import cpu_count
 from pathlib import Path
 from socket import socket, SOCK_STREAM, AF_INET, gethostbyname
 from typing import AnyStr, Set, Collection, Any
+import uuid
+import time
 
 from socks import socksocket, SOCKS4, SOCKS5, HTTP
 from yarl import URL
@@ -126,6 +128,10 @@ class Proxy(object):
             with self.open_socket() as sock:
                 sock.settimeout(timeout)
                 sock.connect(("gwbyte.sandboxol.com", 80))
+
+                x_nonce = str(uuid.uuid4())
+                x_time = int(time.time())
+
                 sock.sendall(b"GET /server-time HTTP/1.1\r\nHost: gw.sandboxol.com\r\n\r\n")
                 if b'{"code":1,"' in sock.recv(4096):
                     print("True")
