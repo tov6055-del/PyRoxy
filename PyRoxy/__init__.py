@@ -125,7 +125,7 @@ class Proxy(object):
         with suppress(Exception):
             with self.open_socket() as sock:
                 sock.settimeout(timeout)
-                sock.connect(("gw.sandboxol.com", 80))
+                sock.connect(("gwbyte.sandboxol.com", 80))
                 sock.sendall(b"GET /server-time HTTP/1.1\r\nHost: gw.sandboxol.com\r\n\r\n")
                 if b'{"code":1,"' in sock.recv(4096):
                     print("True")
